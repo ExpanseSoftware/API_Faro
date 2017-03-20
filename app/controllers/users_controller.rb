@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :update, :destroy]
+  before_action :set_user, only: [:show, :update, :destroy, :confirm_account]
   before_action :validate_user, only: [:create, :update, :destroy]
   before_action :validate_type, only: [:create, :update]
 
@@ -33,6 +33,16 @@ class UsersController < ApplicationController
   def destroy
     @user.destroy
     head 204
+  end
+
+  def confirm_account
+    @user.user_active = true
+    token = params[:conf_token].to_s
+    if @user.save and @user.active_account_token == token
+      render json: @user, status: :ok
+    else
+      render_error(@user, :unprocessable_entity)
+    end
   end
 
   private

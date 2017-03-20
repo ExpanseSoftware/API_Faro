@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :update, :destroy, :confirm_account]
+  before_action :set_user_by_email, only: [:login]
   before_action :validate_user, only: [:create, :update, :destroy]
   before_action :validate_type, only: [:create, :update]
 
@@ -45,6 +46,15 @@ class UsersController < ApplicationController
     end
   end
 
+  def login
+    password = params[:password].to_s
+    if @user.authenticate(password) and @user.user_active
+      render json: {"token": @user.token}, status: :ok
+    else
+      render_error(@user, :unprocessable_entity)
+    end
+  end
+
   private
   def set_user
     begin
@@ -52,6 +62,16 @@ class UsersController < ApplicationController
     rescue ActiveRecord::RecordNotFound
       user = User.new
       user.errors.add(:id, "Wrong ID provided")
+      render_error(user, 404) and return
+    end
+  end
+
+  def set_user_by_email
+    begin
+      @user = User.find_by user_email: params[:email].to_s
+    rescue ActiveRecord::RecordNotFound
+      user = User.new
+      user.errors.add(:id, "Wrong email provided")
       render_error(user, 404) and return
     end
   end

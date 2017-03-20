@@ -1,0 +1,8 @@
+<% 6.times do |i| %>
+user_<%= i %>:
+  user_name: <%= "Name #{i}" %>
+  user_lastname: <%= "Lastname #{i}" %>
+  user_email: <%= "email#{i}@gmail.com" %>
+  password_digest: <%= BCrypt::Password.create('password') %>
+  token: <%= SecureRandom.base58(24) %>
+<% end %>

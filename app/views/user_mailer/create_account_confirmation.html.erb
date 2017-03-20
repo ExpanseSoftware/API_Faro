@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Bienvenido a Faro <%= @user.full_name %></h1>
+    <p>
+      Necesitamos confirmar tu cuenta para que empieces a usar Faro. Por favor haz clic en el siguiente <a href="/confirm_account?id=<%= @user.id %>&conf_token=<%= @user.active_account_token %>" target="_blank">link.</a><br>
+
+    </p>
+
+    <p>Gracias y ten un gran día.</p>
+    <p>Atentamente, <br>El equipo de Faro</p>
+  </body>
+</html>

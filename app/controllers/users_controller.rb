@@ -16,7 +16,7 @@ class UsersController < ApplicationController
   def create
     user = User.new(user_params)
     if user.save
-      UserMailer.create_account_confirmation(user).deliver_now
+      #UserMailer.create_account_confirmation(user).deliver_now
       render json: user, status: :created
     else
       render_error(user, :unprocessable_entity)

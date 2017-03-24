@@ -51,7 +51,11 @@ class UsersController < ApplicationController
     if @user.authenticate(password) and @user.user_active
       render json: {"token": @user.token}, status: :ok
     else
-      render_error(@user, :unprocessable_entity)
+      if !@user.user_active
+        render json: {"error": "User not active"}
+      else
+        render json: {"error": "Incorrect password"}
+      end
     end
   end
 

@@ -6,7 +6,7 @@
   <body>
     <h1>Bienvenido a Faro <%= @user.full_name %></h1>
     <p>
-      Necesitamos confirmar tu cuenta para que empieces a usar Faro. Por favor haz clic en el siguiente <a href="/confirm_account?id=<%= @user.id %>&conf_token=<%= @user.active_account_token %>" target="_blank">link.</a><br>
+      Necesitamos confirmar tu cuenta para que empieces a usar Faro. Por favor haz clic en el siguiente <a href="https://api-faro.herokuapp.com/confirm_account?id=<%= @user.id %>&conf_token=<%= @user.active_account_token %>" target="_blank">link.</a><br>
 
     </p>
 

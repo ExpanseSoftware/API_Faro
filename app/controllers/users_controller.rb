@@ -61,12 +61,13 @@ class UsersController < ApplicationController
 
   private
   def set_user
-    begin
-      @user = User.find params[:id]
-    rescue ActiveRecord::RecordNotFound
+    @user = User.find_by token: params[:token]
+    if @user.nil?
       user = User.new
-      user.errors.add(:id, "Wrong ID provided")
+      user.errors.add(:token, "Wrong token provided")
       render_error(user, 404) and return
+    else
+      @user
     end
   end
 

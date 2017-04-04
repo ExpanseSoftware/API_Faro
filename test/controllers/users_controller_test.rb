@@ -14,7 +14,7 @@ class UsersControllerTest < ActionController::TestCase
 
   test "Should get valid user data" do
     user = users('user_1')
-    get :show, params: { id: user.id }
+    get :show, params: { token: user.token }
     assert_response :success
     jdata = JSON.parse response.body
     assert_equal user.id.to_s, jdata['data']['id']
@@ -24,11 +24,11 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   test "Should get JSON:API error block when requesting user data with invalid ID" do
-    get :show, params: { id: "z" }
+    get :show, params: { token: "z" }
     assert_response 404
     jdata = JSON.parse response.body
-    assert_equal "Wrong ID provided", jdata['errors'][0]['detail']
-    assert_equal '/data/attributes/id', jdata['errors'][0]['source']['pointer']
+    assert_equal "Wrong token provided", jdata['errors'][0]['detail']
+    assert_equal '/data/attributes/token', jdata['errors'][0]['source']['pointer']
   end
 
   test "Creating new user without sending correct content-type should result in error" do
@@ -102,7 +102,7 @@ class UsersControllerTest < ActionController::TestCase
     @request.headers["Content-Type"] = 'application/vnd.api+json'
     @request.headers["X-Api-Key"] = user.token
     patch :update, params: {
-                     id: user.id,
+                     token: user.token,
                      data: {
                        id: user.id,
                        type: 'users',
@@ -116,7 +116,7 @@ class UsersControllerTest < ActionController::TestCase
     user = users('user_1')
     ucount = User.count - 1
     @request.headers["X-Api-Key"] = user.token
-    delete :destroy, params: { id: users('user_5').id }
+    delete :destroy, params: { token: users('user_5').token }
     assert_response 204
     assert_equal ucount, User.count
   end

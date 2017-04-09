@@ -49,12 +49,12 @@ class UsersController < ApplicationController
   def login
     password = params[:password].to_s
     if @user.authenticate(password) and @user.user_active
-      render json: {"token": @user.token}, status: :ok
+      render json: @user, status: :ok
     else
       if !@user.user_active
         render json: {"error": "User not active"}
       else
-        render json: {"error": "Incorrect password"}
+        render json: {"error": "Incorrect data"}
       end
     end
   end

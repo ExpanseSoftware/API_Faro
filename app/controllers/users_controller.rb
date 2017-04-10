@@ -74,8 +74,11 @@ class UsersController < ApplicationController
   def set_user_by_email
     begin
       @user = User.find_by user_email: params[:email].to_s
+      puts @user
     rescue ActiveRecord::RecordNotFound
+      puts "ingresaste a la excepcion"
       user = User.new
+      puts user
       user.errors.add(:id, "Wrong email provided")
       render_error(user, 404) and return
     end

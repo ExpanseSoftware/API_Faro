@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  promotion_name: MyString
+  promotion_description: MyText
+  promotion_active_status: false
+
+two:
+  promotion_name: MyString
+  promotion_description: MyText
+  promotion_active_status: false

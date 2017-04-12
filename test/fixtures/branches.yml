@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  company: one
+  branch_active_status: false
+
+two:
+  company: two
+  branch_active_status: false

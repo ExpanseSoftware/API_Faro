@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::API
   before_action :set_company, only: [:verify_user_privileges]
-  before_action :set_user, only: [:verify_user_privileges
+  before_action :validate_user, only: [:verify_user_privileges]
   before_action :check_header
 
   private

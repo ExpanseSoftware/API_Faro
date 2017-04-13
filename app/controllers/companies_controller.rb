@@ -6,6 +6,10 @@ class CompaniesController < ApplicationController
     render json: @companies
   end
 
+  def show
+    render json: @company
+  end
+
   def create
     @user = User.find(params[:user_id])
     @company = @user.companies.build(company_params)
@@ -18,6 +22,10 @@ class CompaniesController < ApplicationController
 
   def update
     update_db(@company, company_params)
+  end
+
+  def get_down
+    update_db(@company, :company_active => false)
   end
 
   private

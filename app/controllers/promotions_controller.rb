@@ -15,6 +15,10 @@ class PromotionsController < ApplicationController
     render json: @promotions
   end
 
+  def show
+    render json: @promotion
+  end
+
   def create
     @promotion = @company.promotions.build(promotion_params)
     save_in_db(@promotion)
@@ -22,6 +26,10 @@ class PromotionsController < ApplicationController
 
   def update
     update_db(@promotion, promotion_params)
+  end
+
+  def get_down
+    update_db(@promotion, :promotion_active => false)
   end
 
   def add_branch_to_a_promotion

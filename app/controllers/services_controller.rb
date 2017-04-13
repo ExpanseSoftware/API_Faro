@@ -7,6 +7,10 @@ class ServicesController < ApplicationController
     render json: @services
   end
 
+  def show
+    render json: @service
+  end
+
   def create
     @service = @company.services.build(service_params)
     save_in_db(@service)
@@ -14,6 +18,10 @@ class ServicesController < ApplicationController
 
   def update
     update_db(@service, service_params)
+  end
+
+  def get_down
+    update_db(@service, :service_active => false)
   end
 
   private

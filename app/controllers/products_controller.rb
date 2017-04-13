@@ -6,6 +6,10 @@ class ProductsController < ApplicationController
     render json: @products
   end
 
+  def show
+    render json: @product
+  end
+
   def create
     @product = @company.products.build(product_params)
     save_in_db(@product)
@@ -14,6 +18,10 @@ class ProductsController < ApplicationController
   def update
     @product = Product.find(get_id)
     update_db(@product, product_params)
+  end
+
+  def get_down
+    update_db(@product, :product_active => false)
   end
 
   private

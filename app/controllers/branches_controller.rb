@@ -9,6 +9,10 @@ class BranchesController < ApplicationController
     render json: @branches
   end
 
+  def show
+    render json: @branch
+  end
+
   def create
     @branch = @company.branches.build(branch_params)
     save_in_db(@branch)
@@ -36,6 +40,10 @@ class BranchesController < ApplicationController
 
   def update
     update_db(@branch, branch_params)
+  end
+
+  def get_down
+    update_db(@branch, :branch_active => false)
   end
 
   private

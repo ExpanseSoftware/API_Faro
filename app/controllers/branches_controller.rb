@@ -1,6 +1,7 @@
 class BranchesController < ApplicationController
   before_action :set_branch, except: [:index, :create]
-  before_action :set_company, only: [:create]
+  before_action :verify_user_privileges, except: [:index, :show]
+  #before_action :set_company, only: [:create]
   before_action :set_product, only: [:add_product_to_a_branch, :remove_product_from_a_branch]
   before_action :set_service, only: [:add_service_to_a_branch, :remove_service_from_a_branch]
 
@@ -48,8 +49,9 @@ class BranchesController < ApplicationController
 
   private
   def branch_params
-    params.require(:branch).permit(:branch_type_id, :branch_address,
-      :branch_coordinates)
+    #params.require(:branch).permit(:branch_type_id, :branch_address,
+    #  :branch_coordinates)
+    ActiveModelSerializers::Deserialization.jsonapi_parse(params)
   end
 
 end

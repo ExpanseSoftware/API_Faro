@@ -1,5 +1,8 @@
 class CompaniesController < ApplicationController
-  before_action :set_company, only: [:update]
+  before_action :set_company, only: [:update, :show]
+  before_action :validate_user, only: [:create, :update, :get_down]
+  before_action :validate_type, only: [:create, :update]
+  before_action :set_user, only: [:create]
 
   def index
     @companies = Company.all
@@ -11,13 +14,8 @@ class CompaniesController < ApplicationController
   end
 
   def create
-    @user = User.find(params[:user_id])
-    @company = @user.companies.build(company_params)
-    @userType = UserType.new(user_status: 'admin', user_id: @user.id, company_id: @company.id)
-    if @userType.valid?
-      save_in_db(@company)
-      save_in_db(@userType)
-    end
+    @company = Company.new(company_params)
+    @company.save && @company.user_types.create(user_status: 'admin', user_id: @user.id)
   end
 
   def update
@@ -30,7 +28,8 @@ class CompaniesController < ApplicationController
 
   private
   def company_params
-    params.require(:company).permit(:category_id, :company_type_id, :company_name,
-      :company_description)
+    #params.require(:company).permit(:category_id, :company_type_id, :company_name,
+    #  :company_description)
+    ActiveModelSerializers::Deserialization.jsonapi_parse(params)
   end
 end

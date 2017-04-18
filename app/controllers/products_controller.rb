@@ -1,5 +1,7 @@
 class ProductsController < ApplicationController
   before_action :set_company, only: [:create]
+  before_action :set_product, only: [:update, :get_down]
+  before_action :verify_user_privileges, except: [:index, :show]
 
   def index
     @products = Product.all
@@ -16,7 +18,6 @@ class ProductsController < ApplicationController
   end
 
   def update
-    @product = Product.find(get_id)
     update_db(@product, product_params)
   end
 
@@ -26,8 +27,9 @@ class ProductsController < ApplicationController
 
   private
   def product_params
-    params.require(:product).permit(:product_name, :product_description, :product_price,
-      :product_sold_quantity)
+    #params.require(:product).permit(:product_name, :product_description, :product_price,
+    #  :product_sold_quantity)
+    ActiveModelSerializers::Deserialization.jsonapi_parse(params)
   end
 
 end

@@ -1,6 +1,7 @@
 class ServicesController < ApplicationController
   before_action :set_company, only: [:create]
-  before_action :set_service, only: [:update]
+  before_action :set_service, only: [:update, :get_down]
+  before_action :verify_user_privileges, except: [:index, :show]
 
   def index
     @services = Service.all
@@ -26,6 +27,7 @@ class ServicesController < ApplicationController
 
   private
   def service_params
-    params.require(:service).permit(:service_name, :service_description)
+    #params.require(:service).permit(:service_name, :service_description)
+    ActiveModelSerializers::Deserialization.jsonapi_parse(params)
   end
 end

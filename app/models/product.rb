@@ -10,6 +10,8 @@ class Product < ApplicationRecord
   validates :product_description, length: {in: 20..100}
 
   def set_default_values
-    self.product_active ||= true
+    if self.product_active == nil
+      self.product_active ||= true
+    end
   end
 end

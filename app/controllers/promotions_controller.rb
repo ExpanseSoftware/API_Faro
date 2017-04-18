@@ -1,17 +1,18 @@
 class PromotionsController < ApplicationController
-  before_action :set_company, only: [:create]
+  before_action :verify_user_privileges, except: [:index, :show]
+  #before_action :set_company, only: [:create]
   before_action :set_product, only: [:add_product_to_a_promotion, :remove_product_from_a_promotion]
   before_action :set_service, only: [:add_service_to_a_promotion, :remove_service_from_a_promotion]
   before_action :set_promotion, except: [:index, :create]
-  before_action :set_branch, except: [:index, :create, :update,
-    :remove_service_from_a_promotion, :remove_product_from_a_promotion]
+  before_action :set_branch, only: [:add_branch_to_a_promotion, :remove_branch_from_a_promotion,
+    :add_service_to_a_promotion, :add_product_to_a_promotion]
   after_action :add_branch_promo_status, only: [:add_branch_to_a_promotion,
     :add_service_to_a_promotion, :add_product_to_a_promotion]
   after_action :remove_branch_promo_status, only: [:remove_branch_from_a_promotion,
     :remove_product_from_a_promotion, :remove_service_from_a_promotion]
 
   def index
-    @promotions = PromoRelation.all
+    @promotions = Promotion.all
     render json: @promotions
   end
 
@@ -64,7 +65,8 @@ class PromotionsController < ApplicationController
 
   private
   def promotion_params
-    params.require(:promotion).permit(:promotion_name, :promotion_description)
+    #params.require(:promotion).permit(:promotion_name, :promotion_description)
+    ActiveModelSerializers::Deserialization.jsonapi_parse(params)
   end
 
   def add_branch_promo_status

@@ -12,22 +12,6 @@
 
 ActiveRecord::Schema.define(version: 20170314153057) do
 
-  create_table "users", force: :cascade do |t|
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
-    t.string   "user_name"
-    t.string   "user_lastname"
-    t.string   "user_second_lastname"
-    t.string   "user_email"
-    t.date     "user_birthdate"
-    t.string   "user_gender"
-    t.string   "password_digest"
-    t.string   "token"
-    t.boolean  "user_active"
-    t.string   "active_account_token"
-    t.index ["token"], name: "index_users_on_token", unique: true
-  end
-
   create_table "branch_promotion_relations", force: :cascade do |t|
     t.integer  "branch_id"
     t.integer  "promotion_id"
@@ -172,17 +156,19 @@ ActiveRecord::Schema.define(version: 20170314153057) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "user_name"
-    t.string   "user_first_lastname"
-    t.string   "user_second_lastname"
-    t.string   "user_nickname"
-    t.string   "user_password"
-    t.string   "user_gender"
-    t.string   "user_token"
-    t.datetime "user_birthday"
-    t.string   "user_birthplace"
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
+    t.string   "user_name"
+    t.string   "user_lastname"
+    t.string   "user_second_lastname"
+    t.string   "user_email"
+    t.date     "user_birthdate"
+    t.string   "user_gender"
+    t.string   "password_digest"
+    t.string   "token"
+    t.boolean  "user_active"
+    t.string   "active_account_token"
+    t.index ["token"], name: "index_users_on_token", unique: true
   end
 
 end

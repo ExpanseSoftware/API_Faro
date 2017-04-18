@@ -1,4 +1,6 @@
 class CompanyTypesController < ApplicationController
+  before_action :validate_user, only: [:create, :update]
+  before_action :validate_type, only: [:create, :update]
   def index
     @company_types = CompanyType.all
     render json: @company_types
@@ -16,6 +18,10 @@ class CompanyTypesController < ApplicationController
 
   private
   def company_type_params
-    params.require(:company_type).permit(:company_type_name)
+    ActiveModelSerializers::Deserialization.jsonapi_parse(params)
   end
+
+  #def company_type_params
+  #  params.require(:company_type).permit(:company_type_name)
+  #end
 end

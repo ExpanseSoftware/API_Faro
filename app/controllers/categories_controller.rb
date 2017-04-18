@@ -1,5 +1,7 @@
 class CategoriesController < ApplicationController
   before_action :set_category, only: [:update]
+  before_action :validate_user, only: [:create, :update]
+  before_action :validate_type, only: [:create, :update]
 
   def index
     @categories = Category.all
@@ -17,6 +19,11 @@ class CategoriesController < ApplicationController
 
   private
   def category_params
-    params.require(:category).permit(:category_name, :category_description)
+    ActiveModelSerializers::Deserialization.jsonapi_parse(params)
+    #params.require(:category).permit(:category_name, :category_description)
+  end
+
+  def set_category
+    @category = Category.find(params[:id])
   end
 end

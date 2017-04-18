@@ -1,4 +1,5 @@
 class ProductSerializer < ActiveModel::Serializer
   attributes :id, :product_name, :product_description, :product_price,
-    :product_active_status, :product_sold_quantity
+    :product_active, :product_sold_quantity
+  belongs_to :company
 end

@@ -16,6 +16,7 @@ class BranchTypesController < ApplicationController
 
   private
   def branch_type_params
-    params.require(:branch_type).permit(:branch_type_name)
+    #params.require(:branch_type).permit(:branch_type_name)
+    ActiveModelSerializers::Deserialization.jsonapi_parse(params)
   end
 end

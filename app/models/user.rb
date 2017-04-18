@@ -2,6 +2,9 @@ class User < ApplicationRecord
   has_secure_token
   has_secure_password
   before_save :set_default_values
+  has_many :phones, as: :imageable
+  has_many :user_types
+  has_many :companies, through: :user_types
 
   validates :user_name, :user_lastname, :user_email, presence: true
   validates :user_email, uniqueness: true

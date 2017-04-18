@@ -6,10 +6,12 @@ class Promotion < ApplicationRecord
   has_and_belongs_to_many :branches
   #Validations
   validates :promotion_name, :promotion_description, presence: true
-  validates :promotion_name, length: {in: 6..20}
-  validates :product_description, length: {in: 20..100}
-  
+  validates :promotion_name, length: {in: 6..50}
+  validates :promotion_description, length: {in: 20..150}
+
   def set_default_values
-    self.promotion_active ||= true
+    if self.promotion_active == nil
+      self.promotion_active ||= true
+    end
   end
 end

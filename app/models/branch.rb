@@ -11,9 +11,12 @@ class Branch < ApplicationRecord
   #Validations
   #validates :branch_coordinates, :branch_address, length: {in: 10..50}
   validates :branch_coordinates, :branch_address, presence: true
-  
+
   def set_default_values
-    self.branch_active ||= true
+    if self.branch_active == nil && self.branch_promotion_status == nil
+      self.branch_active ||= true
+      self.branch_promotion_status ||= false
+    end
   end
 
 end

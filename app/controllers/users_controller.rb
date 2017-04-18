@@ -60,16 +60,6 @@ class UsersController < ApplicationController
   end
 
   private
-  def set_user
-    @user = User.find_by token: params[:token]
-    if @user.nil?
-      user = User.new
-      user.errors.add(:token, "Wrong token provided")
-      render_error(user, 404) and return
-    else
-      @user
-    end
-  end
 
   def set_user_by_email
     @user = User.find_by user_email: params[:email].to_s
